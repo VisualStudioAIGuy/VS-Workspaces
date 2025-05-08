@@ -20,6 +20,10 @@ calculate_percent(dataset, 1)
 print(dataset_G["HeartDisease"].mean().sort_values())
 #Commented out because fills up output
 """
+pd.set_option('future.no_silent_downcasting', True)
 
-object_headings = ["Sex", "ChestPainType", "RestingECG", "ExerciseAngina", "ST_Slope"]
-print(dataset[object_headings].head())
+
+dataset["ExerciseAngina"] = dataset["ExerciseAngina"].replace({"Y":1, "N":0})
+one_hot_headings = ["Sex", "ChestPainType", "RestingECG", "ST_Slope"]
+dataset = pd.get_dummies(dataset, columns=one_hot_headings, dtype=int)
+print(dataset.head())
