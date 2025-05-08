@@ -17,4 +17,9 @@ calculate_percent(dataset, 0)
 calculate_percent(dataset, 1)
 
 """dataset_G = dataset.groupby("Age")
-print(dataset_G["HeartDisease"].mean().sort_values())"""
+print(dataset_G["HeartDisease"].mean().sort_values())
+#Commented out because fills up output
+"""
+
+object_headings = ["Sex", "ChestPainType", "RestingECG", "ExerciseAngina", "ST_Slope"]
+print(dataset[object_headings].head())
