@@ -1,5 +1,10 @@
 import pandas as pd
 import numpy as np
+import torch
+from torch import nn
+from torch import optim
+from sklearn.model_selection import train_test_split
+
 
 def calculate_percent(dataset, number, type="HeartDisease"):
     total_count = dataset[type].shape[0]
@@ -20,10 +25,16 @@ calculate_percent(dataset, 1)
 print(dataset_G["HeartDisease"].mean().sort_values())
 #Commented out because fills up output
 """
-pd.set_option('future.no_silent_downcasting', True)
 
 
-dataset["ExerciseAngina"] = dataset["ExerciseAngina"].replace({"Y":1, "N":0})
-one_hot_headings = ["Sex", "ChestPainType", "RestingECG", "ST_Slope"]
+one_hot_headings = ["Sex", "ChestPainType", "RestingECG", "ST_Slope", "ExerciseAngina"]
 dataset = pd.get_dummies(dataset, columns=one_hot_headings, dtype=int)
 print(dataset.head())
+
+train_features = dataset.drop(["HeartDisease"], axis=1)
+test_features = dataset["HeartDisease"]
+print(train_features.info())
+X = torch.tensor(train_features.values, dtype=torch.float32)
+y = torch.tensor(test_features.values, dtype=torch.float32).view(-1,1)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=.8, test_size=.2, random_state=42)
