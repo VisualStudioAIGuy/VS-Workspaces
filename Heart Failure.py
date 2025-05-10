@@ -28,11 +28,11 @@ print(dataset_G["HeartDisease"].mean().sort_values())
 
 one_hot_headings = ["Sex", "ChestPainType", "RestingECG", "ST_Slope", "ExerciseAngina"]
 dataset = pd.get_dummies(dataset, columns=one_hot_headings, dtype=int)
-print(dataset.head())
+#print(dataset.head())
 
 train_features = dataset.drop(["HeartDisease"], axis=1)
 test_features = dataset["HeartDisease"]
-print(train_features.info())
+#print(train_features.info())
 
 X = torch.tensor(train_features.values, dtype=torch.float32)
 y = torch.tensor(test_features.values, dtype=torch.float32).view(-1,1)
@@ -52,8 +52,10 @@ binary_model = nn.Sequential(
 loss = nn.BCELoss()
 optimizer = optim.Adam(binary_model.parameters(), lr=0.005)
 
-val = []
+#val = []
+
 num_epochs = 300
+
 for epoch in range(num_epochs):
     predictions = binary_model(X_train)
     BCE = loss(predictions, y_train)
@@ -75,10 +77,14 @@ for item in val:
         test = item
 print(test)
 '''
+
+torch.save(binary_model, 'heart_model900.pth')
+
 binary_model.eval()
 with torch.no_grad():
     test_predictions = binary_model(X_test)
     test_predicted_labels = (test_predictions>=.5).int()
+
 print(accuracy_score(y_test, test_predicted_labels))
 print("--------")
 print(classification_report(y_test, test_predicted_labels))
