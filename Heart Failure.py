@@ -78,7 +78,7 @@ for item in val:
 print(test)
 '''
 
-torch.save(binary_model, 'heart_model900.pth')
+torch.save(binary_model, 'models/heart_model900.pth')
 
 binary_model.eval()
 with torch.no_grad():
