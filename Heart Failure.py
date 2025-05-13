@@ -6,6 +6,7 @@ from torch import optim
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
 
 def calculate_percent(dataset, number, type="HeartDisease"):
     total_count = dataset[type].shape[0]
@@ -14,7 +15,7 @@ def calculate_percent(dataset, number, type="HeartDisease"):
     print(f"Percentage of {number}s in {type} column: {zeros_percentage_heart_disease}%")
 
 dataset = pd.read_csv('Datasets/heart.csv')
-#Dataset previewing
+
 print(dataset.head())
 print(dataset.info())
 
@@ -56,7 +57,7 @@ optimizer = optim.Adam(binary_model.parameters(), lr=0.005)
 
 num_epochs = 300
 
-for epoch in range(num_epochs):
+"""for epoch in range(num_epochs):
     predictions = binary_model(X_train)
     BCE = loss(predictions, y_train)
     BCE.backward()
@@ -76,9 +77,10 @@ for item in val:
     if item >= test:
         test = item
 print(test)
-'''
+'''"""
 
-torch.save(binary_model, 'models/heart_model900.pth')
+#torch.save(binary_model, 'models/heart_model900.pth')
+binary_model = torch.load('models/heart_model900.pth', weights_only=False)
 
 binary_model.eval()
 with torch.no_grad():
@@ -88,3 +90,4 @@ with torch.no_grad():
 print(accuracy_score(y_test, test_predicted_labels))
 print("--------")
 print(classification_report(y_test, test_predicted_labels))
+print(confusion_matrix(y_test, test_predicted_labels))
