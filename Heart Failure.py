@@ -16,8 +16,8 @@ def calculate_percent(dataset, number, type="HeartDisease"):
 
 dataset = pd.read_csv('Datasets/heart.csv')
 
-print(dataset.head())
-print(dataset.info())
+'''print(dataset.head())
+print(dataset.info())'''
 
 calculate_percent(dataset, 0)
 calculate_percent(dataset, 1)
@@ -87,7 +87,7 @@ with torch.no_grad():
     test_predictions = binary_model(X_test)
     test_predicted_labels = (test_predictions>=.5).int()
 
-print(accuracy_score(y_test, test_predicted_labels))
+print("Accuracy: " + str(accuracy_score(y_test, test_predicted_labels)))
 print("--------")
-print(classification_report(y_test, test_predicted_labels))
-print(confusion_matrix(y_test, test_predicted_labels))
+print("Classification: " + str(classification_report(y_test, test_predicted_labels)))
+print("Confusion Matrix: " + str(confusion_matrix(y_test, test_predicted_labels)))
